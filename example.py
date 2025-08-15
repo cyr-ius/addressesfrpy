@@ -19,15 +19,26 @@ async def async_main() -> None:
     api = AddressFr()
 
     try:
-        addresses = await api.async_search("Paris", limit=5)
+        addresses = await api.async_search("Chemiré", limit=5)
         for address in addresses:
-            logger.info("Found address: %s", address)
+            logger.info("==> Found address: %s", address["properties"]["label"])
+            logger.info("==> Coordinates: %s", address["geometry"]["coordinates"])
     except AddressFrException as err:
         logger.error(err)
         return
 
     try:
-        addresses = await api.async_search("Par", limit=10, category="admnistratif")
+        addresses = await api.async_search("Par", limit=10)
+        for address in addresses:
+            logger.info("==> Found address: %s", address["properties"]["label"])
+            logger.info("==> Coordinates: %s", address["geometry"]["coordinates"])
+    except AddressFrException as err:
+        logger.error(err)
+        return
+
+    # Reverse geocoding example https://geo.api.gouv.fr/communes?lon=2.4764814791668925&lat=47.059424367067635
+    try:
+        addresses = await api.async_reverse(2.4764814791668925, 47.059424367067635)
         for address in addresses:
             logger.info("==> Found address: %s", address["properties"]["label"])
             logger.info("==> Coordinates: %s", address["geometry"]["coordinates"])
