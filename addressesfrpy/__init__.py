@@ -2,12 +2,13 @@
 
 from .api import AddressFr
 from .auth import HttpRequestError, RequestException, TimeoutExceededError
-from .exceptions import AddressFrException
+from .exceptions import AddressFrException, AddressNotFound
 
 __all__ = [
     "AddressFr",
     "AddressFrException",
+    "AddressNotFound",
     "HttpRequestError",
-    "TimeoutExceededError",
     "RequestException",
+    "TimeoutExceededError",
 ]
