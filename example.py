@@ -1,4 +1,4 @@
-"""This example can be run safely as it won't change anything in your box configuration."""
+"""Example script to demonstrate the usage of the AddressFr class for asynchronous address searching and reverse geocoding."""
 
 import asyncio
 import logging
@@ -18,6 +18,7 @@ async def async_main() -> None:
     """Instantiate class."""
     api = AddressFr()
 
+    # Example of searching for addresses
     try:
         addresses = await api.async_search("Paris", limit=5, index="poi")
         for address in addresses:
@@ -28,6 +29,7 @@ async def async_main() -> None:
         logger.error(err)
         return
 
+    # Example of reverse geocoding
     try:
         addresses = await api.async_reverse(
             lon=2.4764814791668925, lat=47.059424367067635, index="poi"
