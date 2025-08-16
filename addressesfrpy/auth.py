@@ -35,7 +35,7 @@ class HTTPRequest:
                 response = await self.session.request(method, path, **kwargs)
                 contents = await response.json()
                 response.raise_for_status()
-        except (asyncio.CancelledError, asyncio.TimeoutError) as error:
+        except (asyncio.CancelledError, TimeoutError) as error:
             raise TimeoutExceededError(
                 "Timeout occurred while connecting to API."
             ) from error
