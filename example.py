@@ -19,7 +19,7 @@ async def async_main() -> None:
     api = AddressFr()
 
     try:
-        addresses = await api.async_search("Rpoutland", limit=5, index="poi")
+        addresses = await api.async_search("Paris", limit=5, index="poi")
         for address in addresses:
             logger.info("==> Found address: %s", address["properties"]["name"])
             logger.info("==> Type: %s", address["properties"]["_type"])
