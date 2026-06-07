@@ -21,9 +21,7 @@ async def async_main() -> None:
     try:
         addresses = await api.async_search("Paris", limit=5, index="poi")
         for address in addresses:
-            logger.info("==> Found address: %s", address["properties"]["name"])
-            logger.info("==> Type: %s", address["properties"]["_type"])
-            logger.info("==> Coordinates: %s", address["geometry"]["coordinates"])
+            logger.info("Address: %s", address)
     except AddressFrException as err:
         logger.error(err)
         return
@@ -34,8 +32,7 @@ async def async_main() -> None:
             lon=2.4764814791668925, lat=47.059424367067635, index="poi"
         )
         for address in addresses:
-            logger.info("==> Found address: %s", address["properties"]["name"])
-            logger.info("==> Coordinates: %s", address["geometry"]["coordinates"])
+            logger.info("Address: %s", address)
     except AddressFrException as err:
         logger.error(err)
         return
