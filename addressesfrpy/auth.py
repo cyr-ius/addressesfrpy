@@ -12,16 +12,16 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class HTTPRequest:
-    """Authentication for VigiEau API requests."""
+    """Base class for HTTP API requests."""
 
     TIMEOUT = 120  # Default timeout for requests in seconds
 
     def __init__(
         self, session: ClientSession | None = None, timeout: int = TIMEOUT
     ) -> None:
-        """Initialize the VigiEauAuth."""
+        """Initialize the HTTP request handler."""
         self.timeout = timeout
-        self.session = session or ClientSession()
+        self.session = session
 
     async def async_request(self, path: str, method: str = "get", **kwargs: Any) -> Any:
         """Make an authenticated request to the API."""
@@ -30,11 +30,11 @@ class HTTPRequest:
         try:
             async with asyncio.timeout(self.timeout):
                 if self.session is None:
-                    raise HttpRequestError("ClientSession is not initialized.")
+                    self.session = ClientSession()
                 _LOGGER.debug("Request: %s (%s) - %s", path, method, kwargs)
                 response = await self.session.request(method, path, **kwargs)
-                contents = await response.json()
                 response.raise_for_status()
+                contents = await response.json()
         except (asyncio.CancelledError, TimeoutError) as error:
             raise TimeoutExceededError(
                 "Timeout occurred while connecting to API."

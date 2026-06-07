@@ -108,19 +108,18 @@ class AddressFr(HTTPRequest):
 
         return self._check_response(addresses)
 
-    def _check_response(self, response: Any) -> Any:
+    def _check_response(self, response: Any) -> list[dict[str, Any]]:
         """Check the response for errors."""
-        if response and isinstance(response, dict) and "features" in response:
-            response = response["features"]
-            if not response:
-                raise AddressNotFound("No addresses found for the given query.")
-            return response
         if not response or not isinstance(response, dict):
             raise AddressFrException("Invalid response from address service.")
         if "error" in response:
             raise AddressFrException(f"Error in response: {response['error']}")
-        if "features" not in response or not response["features"]:
+        if "features" not in response:
             raise AddressFrException("No features found in the response.")
+        features = response["features"]
+        if not features:
+            raise AddressNotFound("No addresses found for the given query.")
+        return features
 
     async def async_close(self) -> None:
         """Close the HTTP session."""
