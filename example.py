@@ -3,8 +3,7 @@
 import asyncio
 import logging
 
-from addressesfrpy import AddressFr
-from addressesfrpy.exceptions import AddressFrException
+from addressesfrpy import AddressFr, AddressFrException
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -45,6 +44,4 @@ async def async_main() -> None:
 
 
 if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     asyncio.run(async_main())
